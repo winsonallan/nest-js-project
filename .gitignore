@@ -1,0 +1,75 @@
+#Frontend
+/frontend/node_modules
+/frontend/.pnp
+/frontend/.pnp.*
+/frontend/.yarn/*
+/frontend/!.yarn/patches
+/frontend/!.yarn/plugins
+/frontend/!.yarn/releases
+/frontend/!.yarn/versions
+/frontend/# testing
+/frontend/coverage
+/frontend/# next.js
+/frontend/.next/
+/frontend/out/
+/frontend/# production
+/frontend/build
+/frontend/# misc
+/frontend/.DS_Store
+/frontend/*.pem
+/frontend/# debug
+/frontend/npm-debug.log*
+/frontend/yarn-debug.log*
+/frontend/yarn-error.log*
+/frontend/.pnpm-debug.log*
+/frontend/# vercel
+/frontend/.vercel
+/frontend/# typescript
+/frontend/*.tsbuildinfo
+/frontend/next-env.d.ts
+/frontend/AGENTS.md
+/frontend/CLAUDE.md
+
+#Backend
+/backend/dist
+/backend/node_modules
+/backend/build
+/backend/# Logs
+/backend/logs
+/backend/*.log
+/backend/npm-debug.log*
+/backend/pnpm-debug.log*
+/backend/yarn-debug.log*
+/backend/yarn-error.log*
+/backend/lerna-debug.log*
+/backend/# OS
+/backend/.DS_Store
+/backend/# Tests
+/backend/coverage
+/backend/.nyc_output
+/backend/# IDEs and editors
+/backend/.idea
+/backend/.project
+/backend/.classpath
+/backend/.c9/
+/backend/*.launch
+/backend/.settings/
+/backend/*.sublime-workspace
+/backend/# IDE - VSCode
+/backend/.vscode/*
+/backend/!.vscode/settings.json
+/backend/!.vscode/tasks.json
+/backend/!.vscode/launch.json
+/backend/!.vscode/extensions.json
+/backend/# dotenv environment variable files
+/backend/# temp directory
+/backend/.temp
+/backend/.tmp
+/backend/# Runtime data
+/backend/pids
+/backend/*.pid
+/backend/*.seed
+/backend/*.pid.lock
+/backend/# Diagnostic reports (https://nodejs.org/api//report.backend/html)
+/backend/report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
+/backend/uploads
