@@ -101,11 +101,11 @@ Open **http://localhost:3000** in your browser.
 | Admin (HRD)       | `admin@company.com` | `admin123`    |
 | Employee          | `budi@company.com`  | `password123` |
 | Employee          | `sam@company.com`   | `password123` |
-| Employee          | `john@company.com`  | `password123` | -> Shouldn't be able to log in |
+| Inactive Employee | `john@company.com`  | `password123` | -> Shouldn't be able to log in |
 | Employee          | `ahmad@company.com` | `password123` |
 | Employee          | `dewi@company.com`  | `password123` |
 | Employee          | `rina@company.com`  | `password123` |
-| Inactive employee | `ray@company.com`   | `password123` |
+| Employee          | `ray@company.com`   | `password123` |
 
 ---
 
