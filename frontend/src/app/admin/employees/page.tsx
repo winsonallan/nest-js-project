@@ -30,8 +30,6 @@ const EMPTY_FORM = {
 	isActive: true,
 };
 
-
-
 export default function EmployeesPage() {
 	const [employees, setEmployees] = useState<Employee[]>([]);
 	const [filtered, setFiltered] = useState<Employee[]>([]);
