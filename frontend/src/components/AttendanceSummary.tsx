@@ -12,7 +12,7 @@ export default function AttendanceSummary(
   }
 ) {
   const summaryArr = [
-    { label: `${summary.present ?? 0} present`, ...STATUS_STYLE["On time"] },
+    { label: `${summary.present ?? 0} on time`, ...STATUS_STYLE["On time"] },
     { label: `${summary.late ?? 0} late`, ...STATUS_STYLE["Late"] },
     { label: `${summary.absent ?? 0} absent`, ...STATUS_STYLE["Absent"] },
   ]

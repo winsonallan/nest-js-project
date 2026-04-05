@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { STATUS_STYLE } from "@/components/StatusStyles";
 import api from "@/lib/api";
 import { getUser } from "@/lib/auth";
-import { getStatus } from "@/components/constants";
+import { getStatus } from "@/lib/attendance";
 
 export default function DashboardPage() {
 	const user = getUser();

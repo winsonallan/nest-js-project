@@ -1,12 +1,14 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import PhotoModal from "@/components/attendance/PhotoModal";
 import { STATUS_STYLE } from "@/components/StatusStyles";
 import api from "@/lib/api";
 import AttendanceSummary from "@/components/AttendanceSummary";
 import TablePagination from "@/components/TablePagination";
-import { PAGE_SIZE_OPTIONS, getStatus, type SortDir } from "@/components/constants";
+import { PAGE_SIZE_OPTIONS, type SortDir } from "@/components/constants";
+import { getWorkingDaysInMonth } from "@/lib/attendance";
+import { getStatus } from "@/lib/attendance";
 
 export default function HistoryPage() {
 	const [records, setRecords] = useState<any[]>([]);
@@ -81,13 +83,16 @@ export default function HistoryPage() {
 		</span>
 	);
 
-	const summary = {
-		present: filtered.filter((r) => getStatus(r.checkInTime) !== "Absent")
-			.length,
-		late: filtered.filter((r) => getStatus(r.checkInTime) === "Late").length,
-		absent: filtered.filter((r) => !r.checkInTime).length,
-	};
+	const summary = useMemo(() => {
+		const workingDays = getWorkingDaysInMonth(month);
+		const checkedInDates = new Set(filtered.map(r => r.date));
 
+		const present = filtered.filter(r => getStatus(r.checkInTime) === 'On time').length;
+		const late    = filtered.filter(r => getStatus(r.checkInTime) === 'Late').length;
+		const absent  = workingDays.filter(d => !checkedInDates.has(d)).length;
+
+		return { present, late, absent };
+	}, [filtered, month]);
 	const thStyle =
 		"text-left px-4 py-3 text-xs font-semibold cursor-pointer select-none whitespace-nowrap uppercase tracking-wider";
 

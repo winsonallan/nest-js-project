@@ -8,6 +8,8 @@ import {
   UploadedFile,
   UseGuards,
   UseInterceptors,
+  Param,
+  ParseIntPipe
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import * as path from 'path';
@@ -64,5 +66,12 @@ export class AttendanceController {
   @Roles('admin')
   getAll(@Query('date') date?: string) {
     return this.service.getAll(date);
+  }
+
+  @Get('employee/:id')
+  @UseGuards(RolesGuard)
+  @Roles('admin')
+  getByEmployeeId(@Param('id', ParseIntPipe) id: number) {
+    return this.service.getByEmployee(id);
   }
 }

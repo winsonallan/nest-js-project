@@ -5,6 +5,7 @@ import api from "@/lib/api";
 import TablePagination from "@/components/TablePagination";
 import { inputStyle, PAGE_SIZE_OPTIONS, SortDir } from "@/components/constants";
 import AddEditEmployeeModal from "@/components/employees/AddEditEmployeeModal";
+import { useRouter } from "next/navigation";
 
 export type Employee = {
 	id: number;
@@ -31,6 +32,8 @@ const EMPTY_FORM = {
 };
 
 export default function EmployeesPage() {
+	const router = useRouter();
+
 	const [employees, setEmployees] = useState<Employee[]>([]);
 	const [filtered, setFiltered] = useState<Employee[]>([]);
 	const [paged, setPaged] = useState<Employee[]>([]);
@@ -60,7 +63,8 @@ export default function EmployeesPage() {
 	}, []);
 
 	useEffect(() => {
-		let list = [...employees];
+		let list = [...employees].filter((e) => e.role !== "admin");
+
 		if (search)
 			list = list.filter(
 				(e) =>
@@ -68,6 +72,7 @@ export default function EmployeesPage() {
 					e.employeeId.toLowerCase().includes(search.toLowerCase()) ||
 					e.email.toLowerCase().includes(search.toLowerCase()),
 			);
+			
 		if (dept) list = list.filter((e) => e.department === dept);
 		list.sort((a, b) => {
 			const av = String(a[sortKey] ?? "").toLowerCase();
@@ -334,15 +339,27 @@ export default function EmployeesPage() {
 												{emp.isActive ? "Active" : "Inactive"}
 											</span>
 										</td>
-										<td className="px-4 py-3">
-											<button
-												onClick={() => openEdit(emp)}
-												className="text-xs font-semibold underline underline-offset-2 transition-opacity hover:opacity-70 cursor-pointer"
-												style={{ color: "var(--grape-purple, #9c528b)" }}
-												type="button"
-											>
-												Edit
-											</button>
+										<td className="flex flex-wrap gap-x-2 px-4 py-3 gap-y-1.5">
+												<button
+													onClick={() => openEdit(emp)}
+													className="text-xs font-semibold underline underline-offset-2 transition-opacity hover:opacity-70 cursor-pointer text-left"
+													style={{ color: "var(--grape-purple, #9c528b)" }}
+													type="button"
+												>
+													Edit
+												</button>
+												{
+													emp.role !== "admin" && (
+														<button
+															onClick={() => router.push(`/admin/attendance/employees/${emp.id}`)}
+															className="text-xs font-semibold underline underline-offset-2 transition-opacity hover:opacity-70 cursor-pointer text-left"
+															style={{ color: "var(--dark-tosca)" }}
+															type="button"
+														>
+															View Attendance
+														</button>
+													)
+												}
 										</td>
 									</tr>
 								))
