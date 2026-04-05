@@ -11,7 +11,7 @@ function randomCheckIn(): string | null {
 	if (roll < 0.8) {
 		// On time: 08:00 – 09:00
 		hour = 8;
-		minute = Math.floor(Math.random() * 61);
+		minute = Math.floor(Math.random() * 60);
 	} else {
 		// Late: 09:01 – 10:30
 		hour = 9 + Math.floor(Math.random() * 2);
@@ -32,7 +32,11 @@ function getWorkingDays(count: number): string[] {
 	while (days.length < count) {
 		const dow = cursor.getDay();
 		if (dow !== 0 && dow !== 6) {
-			days.push(cursor.toISOString().split("T")[0]);
+			const y = cursor.getFullYear();
+			const m = String(cursor.getMonth() + 1).padStart(2, "0");
+			const d = String(cursor.getDate()).padStart(2, "0");
+			
+			days.push(`${y}-${m}-${d}`);
 		}
 		cursor.setDate(cursor.getDate() - 1);
 	}
@@ -53,25 +57,28 @@ export class AttendanceSeeder implements Seeder {
 
 		for (const employee of activeEmployees) {
 			for (const date of workingDays) {
-				const exists = await attendanceRepo.findOne({
-					where: { employeeId: employee.id, date },
-				});
-				if (exists) continue;
-
-				const checkInTime = randomCheckIn();
-				if (!checkInTime) continue;
-
-				await attendanceRepo.save(
-					attendanceRepo.create({
-						employeeId: employee.id,
-						date,
-						checkInTime,
-						workType: "WFH",
-						photoPath: null,
-						notes: null,
-					}),
-				);
-				created++;
+				try {
+					const exists = await attendanceRepo.findOne({
+						where: { employeeId: employee.id, date },
+					});
+					if (exists) continue;
+	
+					const checkInTime = randomCheckIn();
+					if (!checkInTime) continue;
+	
+					await attendanceRepo.save(
+						attendanceRepo.create({
+							employeeId: employee.id,
+							date,
+							checkInTime,
+							photoPath: null,
+							notes: null,
+						}),
+					);
+					created++;
+				} catch (error) {
+					console.error(`  Failed for employee ${employee.id} on ${date}:`, error);
+				}
 			}
 		}
 

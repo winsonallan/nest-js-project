@@ -199,7 +199,7 @@ export default function EmployeeAttendanceDetailPage() {
                     <td className="px-4 py-3">
                       {item.photoPath ? (
                         <button onClick={() => setPhotoUrl(`${process.env.NEXT_PUBLIC_BACKEND_URL}/${item.photoPath}`)}
-                          className="text-xs font-semibold underline underline-offset-2 hover:opacity-70"
+                          className="text-xs font-semibold underline underline-offset-2 hover:opacity-70 cursor-pointer"
                           style={{ color: "var(--grape-purple)" }} type="button">
                           View
                         </button>

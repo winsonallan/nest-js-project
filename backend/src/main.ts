@@ -6,9 +6,12 @@ async function bootstrap() {
 	const app = await NestFactory.create(AppModule);
 
 	app.setGlobalPrefix("api");
-	app.useGlobalPipes(new ValidationPipe());
+	app.useGlobalPipes(new ValidationPipe({
+		whitelist: true,
+		transform: true
+	}));
 	app.enableCors();
-
+	app.enableShutdownHooks();
 	await app.listen(3001);
 	console.log("Backend running on localhost:3001");
 }

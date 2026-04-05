@@ -32,9 +32,6 @@ export class Attendance {
 	@Column({ type: "varchar", nullable: true })
 	photoPath!: string | null;
 
-	@Column({ default: "WFH" })
-	workType!: string;
-
 	@Column({ type: "varchar", nullable: true })
 	notes!: string | null;
 

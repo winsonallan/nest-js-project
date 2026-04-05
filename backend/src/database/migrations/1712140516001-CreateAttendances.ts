@@ -38,12 +38,6 @@ export class CreateAttendances1712140516001 implements MigrationInterface {
 						isNullable: true,
 					},
 					{
-						name: "workType",
-						type: "varchar",
-						length: "20",
-						default: "'WFH'",
-					},
-					{
 						name: "notes",
 						type: "varchar",
 						length: "500",

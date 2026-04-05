@@ -17,7 +17,7 @@ const employees = [
 	// Employees
 	{
 		employeeId: "EMP001",
-		name: "Budi Santoso",
+		name: "Budi Budiman",
 		email: "budi@company.com",
 		password: "password123",
 		role: "employee",
@@ -26,8 +26,8 @@ const employees = [
 	},
 	{
 		employeeId: "EMP002",
-		name: "Siti Rahayu",
-		email: "siti@company.com",
+		name: "Sammy Sullivan",
+		email: "sam@company.com",
 		password: "password123",
 		role: "employee",
 		department: "Finance",
@@ -35,8 +35,8 @@ const employees = [
 	},
 	{
 		employeeId: "EMP003",
-		name: "Doni Pratama",
-		email: "doni@company.com",
+		name: "John Doe",
+		email: "john@company.com",
 		password: "password123",
 		role: "employee",
 		department: "Marketing",
@@ -45,7 +45,7 @@ const employees = [
 	},
 	{
 		employeeId: "EMP004",
-		name: "Rina Wijaya",
+		name: "Rina Riska",
 		email: "rina@company.com",
 		password: "password123",
 		role: "employee",
@@ -54,7 +54,7 @@ const employees = [
 	},
 	{
 		employeeId: "EMP005",
-		name: "Ahmad Fauzi",
+		name: "Ahmad Maulana",
 		email: "ahmad@company.com",
 		password: "password123",
 		role: "employee",
@@ -63,7 +63,7 @@ const employees = [
 	},
 	{
 		employeeId: "EMP006",
-		name: "Dewi Kusuma",
+		name: "Dewi Dewa",
 		email: "dewi@company.com",
 		password: "password123",
 		role: "employee",
@@ -72,8 +72,8 @@ const employees = [
 	},
 	{
 		employeeId: "EMP007",
-		name: "Rizky Maulana",
-		email: "rizky@company.com",
+		name: "Rayleigh Rogers",
+		email: "ray@company.com",
 		password: "password123",
 		role: "employee",
 		department: "Finance",

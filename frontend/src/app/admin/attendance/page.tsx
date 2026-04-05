@@ -75,7 +75,7 @@ export default function AdminAttendancePage() {
       if (sortKey === "status") { av = getStatus(a.checkInTime); bv = getStatus(b.checkInTime); }
       return sortDir === "asc" ? av.localeCompare(bv) : bv.localeCompare(av);
     });
-    
+
     setFiltered(list);
     setPage(1);
   }, [fullList, deptFilter, statusFilter, sortKey, sortDir]);
@@ -117,13 +117,6 @@ export default function AdminAttendancePage() {
         <h2 className="text-xl font-bold" style={{ color: "var(--dark-blue-indigo)" }}>
           Attendance log
         </h2>
-        <button
-          onClick={() => router.push("/admin/attendance/employees")}
-          className="text-sm font-semibold px-4 py-2 rounded-xl transition-opacity hover:opacity-80"
-          style={{ background: "var(--lighter-grey-purple)", color: "var(--grape-purple)" }}
-        >
-          View per employee →
-        </button>
       </div>
 
       {/* Filters */}
