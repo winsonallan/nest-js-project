@@ -65,7 +65,7 @@ export default function LoginPage() {
 						className="text-2xl font-bold tracking-tight"
 						style={{ color: "var(--dark-blue-indigo)" }}
 					>
-						AbsensiKu
+						MyAbsensi
 					</h1>
 					<p
 						className="text-xs mt-1 tracking-widest uppercase font-medium"

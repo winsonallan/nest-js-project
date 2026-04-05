@@ -2,8 +2,11 @@
 import { PlusCircle } from "lucide-react";
 import { useEffect, useState } from "react";
 import api from "@/lib/api";
+import TablePagination from "@/components/TablePagination";
+import { inputStyle, PAGE_SIZE_OPTIONS, SortDir } from "@/components/constants";
+import AddEditEmployeeModal from "@/components/employees/AddEditEmployeeModal";
 
-type Employee = {
+export type Employee = {
 	id: number;
 	employeeId: string;
 	name: string;
@@ -13,8 +16,8 @@ type Employee = {
 	role: string;
 	isActive: boolean;
 };
+
 type SortKey = keyof Employee;
-type SortDir = "asc" | "desc";
 
 const EMPTY_FORM = {
 	name: "",
@@ -26,48 +29,8 @@ const EMPTY_FORM = {
 	employeeId: "",
 	isActive: true,
 };
-const PAGE_SIZE_OPTIONS = [5, 10, 20, 50];
 
-const inputStyle = {
-	background: "var(--floral-white, #fffaf2)",
-	border: "1.5px solid var(--light-grey-purple)",
-	color: "var(--dark-blue-indigo, #2e294e)",
-};
 
-function StyledInput({
-	value,
-	onChange,
-	type = "text",
-	placeholder = "",
-}: any) {
-	return (
-		<input
-			type={type}
-			value={value}
-			onChange={onChange}
-			placeholder={placeholder}
-			className="w-full rounded-xl px-3 py-2.5 text-sm outline-none transition-all"
-			style={inputStyle}
-			onFocus={(e) =>
-				(e.target.style.borderColor = "var(--grape-purple, #9c528b)")
-			}
-			onBlur={(e) => (e.target.style.borderColor = "var(--light-grey-purple)")}
-		/>
-	);
-}
-
-function StyledSelect({ value, onChange, children }: any) {
-	return (
-		<select
-			value={value}
-			onChange={onChange}
-			className="w-full rounded-xl px-3 py-2.5 text-sm outline-none"
-			style={inputStyle}
-		>
-			{children}
-		</select>
-	);
-}
 
 export default function EmployeesPage() {
 	const [employees, setEmployees] = useState<Employee[]>([]);
@@ -193,7 +156,7 @@ export default function EmployeesPage() {
 				</h2>
 				<button
 					onClick={openAdd}
-					className="flex items-center gap-1.5 px-4 py-2 rounded-xl text-sm font-semibold transition-all hover:opacity-90 hover:scale-[1.02] active:scale-[0.98]"
+					className="flex items-center gap-1.5 px-4 py-2 rounded-xl text-sm font-semibold transition-all hover:opacity-90 hover:scale-[1.02] active:scale-[0.98] cursor-pointer"
 					style={{
 						background: "var(--grape-purple, #9c528b)",
 						color: "#fff",
@@ -376,7 +339,7 @@ export default function EmployeesPage() {
 										<td className="px-4 py-3">
 											<button
 												onClick={() => openEdit(emp)}
-												className="text-xs font-semibold underline underline-offset-2 transition-opacity hover:opacity-70"
+												className="text-xs font-semibold underline underline-offset-2 transition-opacity hover:opacity-70 cursor-pointer"
 												style={{ color: "var(--grape-purple, #9c528b)" }}
 												type="button"
 											>
@@ -393,264 +356,27 @@ export default function EmployeesPage() {
 
 			{/* Pagination */}
 			{!loading && (
-				<div className="flex items-center justify-between flex-wrap gap-2">
-					<div
-						className="flex items-center gap-2 text-xs"
-						style={{ color: "var(--brownish-dark-grey)" }}
-					>
-						<span>Rows:</span>
-						{PAGE_SIZE_OPTIONS.map((n) => (
-							<button
-								key={n}
-								onClick={() => {
-									setPageSize(n);
-									setPage(1);
-								}}
-								className="px-2.5 py-1 rounded-lg text-xs font-semibold transition-all"
-								style={{
-									background:
-										pageSize === n
-											? "var(--grape-purple, #9c528b)"
-											: "transparent",
-									color: pageSize === n ? "#fff" : "var(--brownish-dark-grey)",
-									border: `1.5px solid ${pageSize === n ? "var(--grape-purple, #9c528b)" : "var(--light-grey-purple)"}`,
-								}}
-								type="button"
-							>
-								{n}
-							</button>
-						))}
-					</div>
-					<div
-						className="flex items-center gap-1 text-xs"
-						style={{ color: "var(--brownish-dark-grey)" }}
-					>
-						<span className="mr-2">
-							{filtered.length === 0
-								? "0"
-								: `${(page - 1) * pageSize + 1}–${Math.min(page * pageSize, filtered.length)}`}{" "}
-							of {filtered.length}
-						</span>
-						{[
-							{ label: "«", action: () => setPage(1), disabled: page === 1 },
-							{
-								label: "‹",
-								action: () => setPage((p) => p - 1),
-								disabled: page === 1,
-							},
-							{
-								label: "›",
-								action: () => setPage((p) => p + 1),
-								disabled: page === totalPages,
-							},
-							{
-								label: "»",
-								action: () => setPage(totalPages),
-								disabled: page === totalPages,
-							},
-						].map((btn, i) => (
-							<button
-								key={btn.label}
-								onClick={btn.action}
-								disabled={btn.disabled}
-								className="px-2 py-1 rounded-lg transition-all disabled:opacity-30"
-								style={{
-									border: "1.5px solid var(--light-grey-purple)",
-									color: "var(--dark-blue-indigo, #2e294e)",
-								}}
-								type="button"
-							>
-								{btn.label}
-							</button>
-						))}
-					</div>
-				</div>
+				<TablePagination 
+					page={page} 
+					pageSize={pageSize} 
+					setPage={setPage} 
+					setPageSize={setPageSize} 
+					PAGE_SIZE_OPTIONS={PAGE_SIZE_OPTIONS} 
+					filtered={filtered} 
+					totalPages={totalPages}
+				/>
 			)}
 
 			{/* Add / Edit modal */}
 			{showModal && (
-				<div
-					className="fixed inset-0 flex items-center justify-center z-50 p-4"
-					style={{ background: "var(--almost-light-grey-purple)" }}
-				>
-					<div
-						className="rounded-3xl p-6 w-full max-w-md max-h-[90vh] overflow-y-auto"
-						style={{
-							background: "#fff",
-							boxShadow: "0 24px 64px rgba(46,41,78,0.18)",
-						}}
-					>
-						<h3
-							className="font-bold text-base mb-1"
-							style={{ color: "var(--dark-blue-indigo, #2e294e)" }}
-						>
-							{editTarget ? "Edit employee" : "Add new employee"}
-						</h3>
-						<p
-							className="text-xs mb-5"
-							style={{ color: "var(--brownish-dark-grey)" }}
-						>
-							{editTarget
-								? `Editing ${editTarget.name}`
-								: "Fill in the details for the new employee"}
-						</p>
-
-						<div className="space-y-3">
-							<div className="grid grid-cols-2 gap-3">
-								{[
-									{ key: "name", label: "Full name", type: "text" },
-									{ key: "employeeId", label: "Employee ID", type: "text" },
-								].map((f) => (
-									<div key={f.key}>
-										<label
-											className="text-xs font-semibold uppercase tracking-wider block mb-1.5"
-											style={{ color: "var(--brownish-dark-grey)" }}
-											htmlFor=""
-										>
-											{f.label}
-										</label>
-										<StyledInput
-											type={f.type}
-											value={(form as any)[f.key]}
-											onChange={(e: any) =>
-												setForm((p) => ({ ...p, [f.key]: e.target.value }))
-											}
-										/>
-									</div>
-								))}
-							</div>
-
-							{[
-								{ key: "email", label: "Email", type: "email" },
-								{
-									key: "password",
-									label: editTarget
-										? "New password (leave blank to keep)"
-										: "Password",
-									type: "password",
-								},
-							].map((f) => (
-								<div key={f.key}>
-									<label
-										className="text-xs font-semibold uppercase tracking-wider block mb-1.5"
-										style={{ color: "var(--brownish-dark-grey)" }}
-										htmlFor={f.key}
-									>
-										{f.label}
-									</label>
-									<StyledInput
-										type={f.type}
-										value={(form as any)[f.key]}
-										onChange={(e: any) =>
-											setForm((p) => ({ ...p, [f.key]: e.target.value }))
-										}
-									/>
-								</div>
-							))}
-
-							<div className="grid grid-cols-2 gap-3">
-								<div>
-									<label
-										className="text-xs font-semibold uppercase tracking-wider block mb-1.5"
-										style={{ color: "var(--brownish-dark-grey)" }}
-										htmlFor="department"
-									>
-										Department
-									</label>
-									<StyledInput
-										value={form.department}
-										onChange={(e: any) =>
-											setForm((p) => ({ ...p, department: e.target.value }))
-										}
-									/>
-								</div>
-								<div>
-									<label
-										className="text-xs font-semibold uppercase tracking-wider block mb-1.5"
-										style={{ color: "var(--brownish-dark-grey)" }}
-										htmlFor=""
-									>
-										Position
-									</label>
-									<StyledInput
-										value={form.position}
-										onChange={(e: any) =>
-											setForm((p) => ({ ...p, position: e.target.value }))
-										}
-									/>
-								</div>
-							</div>
-
-							<div className="grid grid-cols-2 gap-3">
-								<div>
-									<label
-										className="text-xs font-semibold uppercase tracking-wider block mb-1.5"
-										style={{ color: "var(--brownish-dark-grey)" }}
-										htmlFor="role"
-									>
-										Role
-									</label>
-									<StyledSelect
-										value={form.role}
-										onChange={(e: any) =>
-											setForm((p) => ({ ...p, role: e.target.value }))
-										}
-									>
-										<option value="employee">Employee</option>
-										<option value="admin">Admin</option>
-									</StyledSelect>
-								</div>
-								<div>
-									<label
-										className="text-xs font-semibold uppercase tracking-wider block mb-1.5"
-										style={{ color: "var(--brownish-dark-grey)" }}
-										htmlFor="status"
-									>
-										Status
-									</label>
-									<StyledSelect
-										value={form.isActive ? "active" : "inactive"}
-										onChange={(e: any) =>
-											setForm((p) => ({
-												...p,
-												isActive: e.target.value === "active",
-											}))
-										}
-									>
-										<option value="active">Active</option>
-										<option value="inactive">Inactive</option>
-									</StyledSelect>
-								</div>
-							</div>
-						</div>
-
-						<div className="flex gap-2 mt-6">
-							<button
-								onClick={() => setShowModal(false)}
-								className="flex-1 rounded-2xl py-2.5 text-sm font-semibold transition-all hover:opacity-80"
-								style={{
-									border: "1.5px solid var(--light-grey-purple)",
-									color: "var(--dark-blue-indigo, #2e294e)",
-								}}
-								type="button"
-							>
-								Cancel
-							</button>
-							<button
-								onClick={handleSave}
-								disabled={saving}
-								className="flex-1 rounded-2xl py-2.5 text-sm font-semibold transition-all hover:opacity-90 disabled:opacity-50"
-								style={{
-									background: "var(--grape-purple, #9c528b)",
-									color: "#fff",
-								}}
-								type="button"
-							>
-								{saving ? "Saving…" : "Save"}
-							</button>
-						</div>
-					</div>
-				</div>
+				<AddEditEmployeeModal
+					editTarget={editTarget}
+					form={form}
+					setForm={setForm}
+					setShowModal={setShowModal}
+					handleSave={handleSave}
+					saving={saving}
+				/>
 			)}
 		</div>
 	);

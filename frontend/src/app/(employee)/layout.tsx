@@ -55,7 +55,7 @@ export default function EmployeeLayout({
 							className="text-sm font-bold tracking-tight"
 							style={{ color: "var(--grape-purple)" }}
 						>
-							AbsensiKu
+							MyAbsensi
 						</span>
 						<div className="flex gap-1">
 							{navItems.map((item) => {
@@ -96,7 +96,7 @@ export default function EmployeeLayout({
 						</div>
 						<button
 							onClick={logout}
-							className="text-xs rounded-lg px-2.5 py-1 transition-all hover:opacity-80"
+							className="text-xs rounded-lg px-2.5 py-1 transition-all hover:opacity-80 cursor-pointer"
 							style={{
 								border: "1.5px solid var(--light-grey-purple)",
 								color: "var(--dark-blue-indigo)",

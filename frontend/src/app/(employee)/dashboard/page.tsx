@@ -5,12 +5,7 @@ import { useEffect, useState } from "react";
 import { STATUS_STYLE } from "@/components/StatusStyles";
 import api from "@/lib/api";
 import { getUser } from "@/lib/auth";
-
-function getStatus(time: string | null): string {
-	if (!time) return "Absent";
-	const [h, m] = time.split(":").map(Number);
-	return h < 9 || (h === 9 && m === 0) ? "On time" : "Late";
-}
+import { getStatus } from "@/components/constants";
 
 export default function DashboardPage() {
 	const user = getUser();

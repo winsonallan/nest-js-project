@@ -45,7 +45,7 @@ export default function AdminLayout({
 							className="text-sm font-bold tracking-tight"
 							style={{ color: "var(--grape-purple, #9c528b)" }}
 						>
-							AbsensiKu
+							MyAbsensi
 						</span>
 						<span
 							className="text-xs px-2 py-0.5 rounded-full font-semibold"
@@ -75,7 +75,7 @@ export default function AdminLayout({
 						</div>
 						<button
 							onClick={logout}
-							className="text-xs rounded-lg px-2.5 py-1 transition-all hover:opacity-80"
+							className="text-xs rounded-lg px-2.5 py-1 transition-all hover:opacity-80 cursor-pointer"
 							style={{
 								border: "1.5px solid var(--light-grey-purple)",
 								color: "var(--dark-blue-indigo, #2e294e)",

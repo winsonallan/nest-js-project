@@ -3,21 +3,9 @@ import { useEffect, useState } from "react";
 import PhotoModal from "@/components/attendance/PhotoModal";
 import { STATUS_STYLE } from "@/components/StatusStyles";
 import api from "@/lib/api";
-
-type SortDir = "asc" | "desc";
-const PAGE_SIZE_OPTIONS = [5, 10, 20, 50];
-
-function getStatus(time: string | null): string {
-	if (!time) return "Absent";
-	const [h, m] = time.split(":").map(Number);
-	return h < 9 || (h === 9 && m === 0) ? "On time" : "Late";
-}
-
-const inputStyle = {
-	background: "var(--floral-white)",
-	border: "1.5px solid var(--light-grey-purple)",
-	color: "var(--dark-blue-indigo)",
-};
+import AttendanceSummary from "@/components/AttendanceSummary";
+import TablePagination from "@/components/TablePagination";
+import { getStatus, PAGE_SIZE_OPTIONS, inputStyle, SortDir } from "@/components/constants";
 
 export default function AdminAttendancePage() {
 	const [records, setRecords] = useState<any[]>([]);
@@ -105,7 +93,7 @@ export default function AdminAttendancePage() {
 	);
 
 	const summary = {
-		onTime: filtered.filter((r) => getStatus(r.checkInTime) === "On time")
+		present: filtered.filter((r) => getStatus(r.checkInTime) === "On time")
 			.length,
 		late: filtered.filter((r) => getStatus(r.checkInTime) === "Late").length,
 		absent: filtered.filter((r) => !r.checkInTime).length,
@@ -178,26 +166,7 @@ export default function AdminAttendancePage() {
 			</div>
 
 			{/* Summary pills */}
-			<div className="flex gap-2 flex-wrap">
-				{[
-					{ label: `${summary.onTime} on time`, ...STATUS_STYLE["On time"] },
-					{ label: `${summary.late} late`, ...STATUS_STYLE["Late"] },
-					{ label: `${summary.absent} absent`, ...STATUS_STYLE["Absent"] },
-					{
-						label: `${summary.total} total`,
-						bg: "var(--light-grey-purple)",
-						color: "var(--dark-blue-indigo)",
-					},
-				].map((s) => (
-					<span
-						key={s.label}
-						className="text-xs px-3 py-1.5 rounded-full font-semibold"
-						style={{ background: s.bg, color: s.color }}
-					>
-						{s.label}
-					</span>
-				))}
-			</div>
+			<AttendanceSummary showTotal={true} summary={summary}/>
 
 			{/* Table */}
 			<div
@@ -344,7 +313,7 @@ export default function AdminAttendancePage() {
 															`${process.env.NEXT_PUBLIC_BACKEND_URL}/${r.photoPath}`,
 														)
 													}
-													className="text-xs font-semibold underline underline-offset-2 transition-opacity hover:opacity-70"
+													className="text-xs font-semibold underline underline-offset-2 transition-opacity hover:opacity-70 cursor-pointer"
 													style={{ color: "var(--grape-purple)" }}
 													type="button"
 												>
@@ -368,74 +337,15 @@ export default function AdminAttendancePage() {
 
 			{/* Pagination */}
 			{!loading && filtered.length > 0 && (
-				<div className="flex items-center justify-between flex-wrap gap-2">
-					<div
-						className="flex items-center gap-2 text-xs"
-						style={{ color: "var(--brownish-dark-grey)" }}
-					>
-						<span>Rows:</span>
-						{PAGE_SIZE_OPTIONS.map((n) => (
-							<button
-								key={n}
-								onClick={() => {
-									setPageSize(n);
-									setPage(1);
-								}}
-								className="px-2.5 py-1 rounded-lg text-xs font-semibold transition-all"
-								style={{
-									background:
-										pageSize === n ? "var(--grape-purple)" : "transparent",
-									color: pageSize === n ? "#fff" : "var(--brownish-dark-grey)",
-									border: `1.5px solid ${pageSize === n ? "var(--grape-purple)" : "var(--light-grey-purple)"}`,
-								}}
-								type="button"
-							>
-								{n}
-							</button>
-						))}
-					</div>
-					<div
-						className="flex items-center gap-1 text-xs"
-						style={{ color: "var(--brownish-dark-grey)" }}
-					>
-						<span className="mr-2">
-							{(page - 1) * pageSize + 1}–
-							{Math.min(page * pageSize, filtered.length)} of {filtered.length}
-						</span>
-						{[
-							{ label: "«", action: () => setPage(1), disabled: page === 1 },
-							{
-								label: "‹",
-								action: () => setPage((p) => p - 1),
-								disabled: page === 1,
-							},
-							{
-								label: "›",
-								action: () => setPage((p) => p + 1),
-								disabled: page === totalPages,
-							},
-							{
-								label: "»",
-								action: () => setPage(totalPages),
-								disabled: page === totalPages,
-							},
-						].map((btn, i) => (
-							<button
-								key={btn.label}
-								onClick={btn.action}
-								disabled={btn.disabled}
-								className="px-2 py-1 rounded-lg transition-all disabled:opacity-30"
-								style={{
-									border: "1.5px solid var(--light-grey-purple)",
-									color: "var(--dark-blue-indigo)",
-								}}
-								type="button"
-							>
-								{btn.label}
-							</button>
-						))}
-					</div>
-				</div>
+				<TablePagination 
+					page={page} 
+					pageSize={pageSize} 
+					setPage={setPage} 
+					setPageSize={setPageSize} 
+					PAGE_SIZE_OPTIONS={PAGE_SIZE_OPTIONS} 
+					filtered={filtered} 
+					totalPages={totalPages}
+				/>
 			)}
 
 			{/* Photo modal */}
