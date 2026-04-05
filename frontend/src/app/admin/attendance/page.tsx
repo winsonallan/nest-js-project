@@ -37,13 +37,11 @@ export default function AdminAttendancePage() {
   }, [date]);
 
   const isWeekend = useMemo(() => {
-    // Parse date parts directly to avoid UTC offset issues
     const [y, m, d] = date.split("-").map(Number);
     const dow = new Date(y, m - 1, d).getDay();
     return dow === 0 || dow === 6;
   }, [date]);
 
-  // Merge real records with synthetic absent rows
   const fullList = useMemo(() => {
     if (isWeekend) return records;
     const checkedInIds = new Set(records.map((r: any) => r.employeeId));
@@ -61,7 +59,6 @@ export default function AdminAttendancePage() {
     return [...records, ...absentRows];
   }, [records, employees, date, isWeekend]);
 
-  // Filter + sort
   useEffect(() => {
     let list = [...fullList].filter(r => r.employee.role !== "admin");
 

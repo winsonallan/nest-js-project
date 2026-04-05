@@ -34,7 +34,6 @@ export default function EmployeeAttendanceDetailPage() {
     }).finally(() => setLoading(false));
   }, [id]);
 
-  // Filter by month + sort
   useEffect(() => {
     const list = records.filter(r => r.date?.startsWith(month));
     list.sort((a, b) => {
