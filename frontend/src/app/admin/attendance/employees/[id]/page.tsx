@@ -117,7 +117,7 @@ export default function EmployeeAttendanceDetailPage() {
               <p className="text-xs mb-0.5" style={{ color: "var(--brownish-dark-grey)" }}>
                 {item.label}
               </p>
-              <p className="text-sm font-semibold" style={{ color: "var(--dark-blue-indigo)" }}>
+              <p className={`text-sm font-semibold ${item.label === "Role" ? "capitalize" : ""}`} style={{ color: "var(--dark-blue-indigo)" }}>
                 {item.value ?? "—"}
               </p>
             </div>
