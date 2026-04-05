@@ -37,7 +37,7 @@ export default function PhotoModal({
 
 				<button
 					onClick={() => setPhotoUrl(null)}
-					className="mt-3 w-full text-sm font-semibold transition-opacity hover:opacity-70"
+					className="mt-3 w-full text-sm font-semibold transition-opacity hover:opacity-70 cursor-pointer"
 					style={{ color: "var(--brownish-dark-grey)" }}
 					type="button"
 				>

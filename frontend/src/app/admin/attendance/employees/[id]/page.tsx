@@ -182,7 +182,7 @@ export default function EmployeeAttendanceDetailPage() {
                     onMouseEnter={e => e.currentTarget.style.background = "rgba(156,82,139,0.03)"}
                     onMouseLeave={e => e.currentTarget.style.background = "transparent"}>
                     <td className="px-4 py-3 text-xs" style={{ color: "var(--dark-blue-indigo)" }}>
-                      {new Date(item.date).toLocaleDateString("id-ID", {
+                      {new Date(item.date).toLocaleDateString("en-US", {
                         weekday: "short", day: "numeric", month: "short",
                       })}
                     </td>

@@ -27,3 +27,19 @@ export function getStatus(time: string | null): string {
 export function toLocalDateString(date: Date): string {
   return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
 }
+
+export function getDisplayWeekDates(): Date[] {
+  const now = new Date();
+  const dow = now.getDay();
+
+  const daysToMon = dow === 0 ? 6 : dow === 6 ? 5 : dow - 1;
+
+  const monday = new Date(now);
+  monday.setDate(now.getDate() - daysToMon);
+
+  return Array.from({ length: 5 }, (_, i) => {
+    const d = new Date(monday);
+    d.setDate(monday.getDate() + i);
+    return d;
+  });
+}

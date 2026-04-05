@@ -226,7 +226,7 @@ export default function HistoryPage() {
 											className="px-4 py-3 text-xs"
 											style={{ color: "var(--dark-blue-indigo)" }}
 										>
-											{new Date(item.date).toLocaleDateString("id-ID", {
+											{new Date(item.date).toLocaleDateString("en-US", {
 												weekday: "short",
 												day: "numeric",
 												month: "short",
@@ -254,7 +254,7 @@ export default function HistoryPage() {
 															`${process.env.NEXT_PUBLIC_BACKEND_URL}/${item.photoPath}`,
 														)
 													}
-													className="text-xs font-semibold underline underline-offset-2 transition-opacity hover:opacity-70"
+													className="text-xs font-semibold underline underline-offset-2 transition-opacity hover:opacity-70 cursor-pointer"
 													style={{ color: "var(--grape-purple)" }}
 													type="button"
 												>

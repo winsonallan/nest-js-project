@@ -74,7 +74,7 @@ export default function PhotoCapture({ onCapture }: Props) {
 				<div
 					className="w-full rounded-2xl flex flex-col items-center justify-center gap-3 py-10 cursor-pointer transition-all hover:opacity-90"
 					style={{
-						background: "var(--floral-white, #fffaf2)",
+						background: "var(--floral-white)",
 						border: "1.5px dashed rgba(156,82,139,0.30)",
 					}}
 					onClick={startCamera}
@@ -86,13 +86,13 @@ export default function PhotoCapture({ onCapture }: Props) {
 						<Camera
 							size={22}
 							strokeWidth={1.8}
-							style={{ color: "var(--grape-purple, #9c528b)" }}
+							style={{ color: "var(--grape-purple)" }}
 						/>
 					</div>
 					<div className="text-center">
 						<p
 							className="text-sm font-semibold"
-							style={{ color: "var(--dark-blue-indigo, #2e294e)" }}
+							style={{ color: "var(--dark-blue-indigo)" }}
 						>
 							Open camera
 						</p>
@@ -111,7 +111,7 @@ export default function PhotoCapture({ onCapture }: Props) {
 					className="w-full rounded-xl px-4 py-3 text-xs text-center font-medium"
 					style={{
 						background: "rgba(244,96,54,0.08)",
-						color: "var(--fire-orange, #f46036)",
+						color: "var(--fire-orange)",
 						border: "1px solid rgba(244,96,54,0.2)",
 					}}
 				>
@@ -145,7 +145,7 @@ export default function PhotoCapture({ onCapture }: Props) {
 					onClick={capture}
 					className="flex items-center gap-2 px-6 py-3 rounded-2xl text-sm font-semibold transition-all hover:opacity-90 hover:scale-[1.02] active:scale-[0.98]"
 					style={{
-						background: "var(--grape-purple, #9c528b)",
+						background: "var(--grape-purple)",
 						color: "#fff",
 						boxShadow: "0 4px 16px rgba(156,82,139,0.30)",
 					}}
@@ -172,7 +172,7 @@ export default function PhotoCapture({ onCapture }: Props) {
 						<div
 							className="absolute bottom-3 right-3 w-8 h-8 rounded-full flex items-center justify-center"
 							style={{
-								background: "var(--sea-green, #07beb8)",
+								background: "var(--sea-green)",
 								boxShadow: "0 2px 8px rgba(7,190,184,0.4)",
 							}}
 						>
@@ -182,8 +182,8 @@ export default function PhotoCapture({ onCapture }: Props) {
 
 					<button
 						onClick={retake}
-						className="flex items-center gap-1.5 text-xs font-semibold underline underline-offset-4 transition-opacity hover:opacity-70"
-						style={{ color: "var(--dark-blue-indigo, #2e294e)" }}
+						className="flex items-center gap-1.5 text-xs font-semibold underline underline-offset-4 transition-opacity hover:opacity-70 cursor-pointer"
+						style={{ color: "var(--dark-blue-indigo)" }}
 						type="button"
 					>
 						<RotateCcw size={12} strokeWidth={2.5} />

@@ -24,7 +24,7 @@ export default function CheckInPage() {
 				headers: { "Content-Type": "multipart/form-data" },
 			});
 			setCheckedTime(
-				new Date().toLocaleTimeString("id-ID", {
+				new Date().toLocaleTimeString("en-US", {
 					hour: "2-digit",
 					minute: "2-digit",
 				}),
@@ -65,7 +65,7 @@ export default function CheckInPage() {
 						className="text-xs mb-2"
 						style={{ color: "var(--brownish-dark-grey)" }}
 					>
-						{new Date().toLocaleDateString("id-ID", {
+						{new Date().toLocaleDateString("en-US", {
 							weekday: "long",
 							day: "numeric",
 							month: "long",
@@ -90,7 +90,7 @@ export default function CheckInPage() {
 					</div>
 					<button
 						onClick={() => router.push("/dashboard")}
-						className="w-full py-3 rounded-2xl text-sm font-semibold transition-all hover:opacity-90"
+						className="w-full py-3 rounded-2xl text-sm font-semibold transition-all hover:opacity-90 cursor-pointer"
 						style={{ background: "var(--grape-purple)", color: "#fff" }}
 						type="button"
 					>
@@ -114,14 +114,14 @@ export default function CheckInPage() {
 					className="text-xs mt-0.5"
 					style={{ color: "var(--brownish-dark-grey)" }}
 				>
-					{new Date().toLocaleDateString("id-ID", {
+					{new Date().toLocaleDateString("en-US", {
 						weekday: "long",
 						day: "numeric",
 						month: "long",
 						year: "numeric",
 					})}
 					{" · "}
-					{new Date().toLocaleTimeString("id-ID", {
+					{new Date().toLocaleTimeString("en-US", {
 						hour: "2-digit",
 						minute: "2-digit",
 					})}
@@ -184,7 +184,7 @@ export default function CheckInPage() {
 			<button
 				onClick={handleCheckIn}
 				disabled={!photo || loading}
-				className="w-full py-3 rounded-2xl text-sm font-semibold transition-all hover:opacity-90 hover:scale-[1.01] active:scale-[0.99] disabled:opacity-40 disabled:cursor-not-allowed disabled:scale-100"
+				className="w-full py-3 rounded-2xl text-sm font-semibold transition-all hover:opacity-90 hover:scale-[1.01] active:scale-[0.99] disabled:opacity-40 disabled:cursor-not-allowed disabled:scale-100 cursor-pointer"
 				style={{
 					background: "var(--grape-purple)",
 					color: "#fff",

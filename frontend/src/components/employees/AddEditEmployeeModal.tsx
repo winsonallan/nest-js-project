@@ -124,12 +124,18 @@ export default function AddEditEmployeeModal({
 							>
 								Department
 							</label>
-							<StyledInput
+							<StyledSelect
 								value={form.department}
 								onChange={(e: any) =>
 									setForm((p) => ({ ...p, department: e.target.value }))
 								}
-							/>
+							>
+								<option value="Finance">Finance</option>
+								<option value="HRD">HRD</option>
+								<option value="Engineering">Engineering</option>
+								<option value="Design">Design</option>
+								<option value="Marketing">Marketing</option>
+							</StyledSelect>
 						</div>
 						<div>
 							<label

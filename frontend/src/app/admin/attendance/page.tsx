@@ -195,7 +195,7 @@ export default function AdminAttendancePage() {
                         {r.employee?.name}
                       </p>
                       <p className="text-xs mt-0.5" style={{ color: "var(--brownish-dark-grey)" }}>
-                        {new Date(r.date).toLocaleDateString("id-ID", { day: "numeric", month: "short", year: "numeric" })}
+                        {new Date(r.date).toLocaleDateString("en-US", { day: "numeric", month: "short", year: "numeric" })}
                       </p>
                     </td>
                     <td className="px-4 py-3 text-xs" style={{ color: "var(--brownish-dark-grey)" }}>

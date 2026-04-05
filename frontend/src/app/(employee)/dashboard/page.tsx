@@ -6,6 +6,8 @@ import { STATUS_STYLE } from "@/components/StatusStyles";
 import api from "@/lib/api";
 import { getUser } from "@/lib/auth";
 import { getStatus } from "@/lib/attendance";
+import { getDisplayWeekDates } from "@/lib/attendance";
+
 
 export default function DashboardPage() {
 	const user = getUser();
@@ -13,6 +15,9 @@ export default function DashboardPage() {
 	const [recent, setRecent] = useState<any[]>([]);
 	const [week, setWeek] = useState<any[]>([]);
 	const [loading, setLoading] = useState(true);
+
+	const weekDates = getDisplayWeekDates();
+	const todayStr = new Date().toISOString().split("T")[0];
 
 	useEffect(() => {
 		api
@@ -61,7 +66,7 @@ export default function DashboardPage() {
 					className="text-xs mt-0.5"
 					style={{ color: "var(--brownish-dark-grey)" }}
 				>
-					{new Date().toLocaleDateString("id-ID", {
+					{new Date().toLocaleDateString("en-US", {
 						weekday: "long",
 						day: "numeric",
 						month: "long",
@@ -125,31 +130,28 @@ export default function DashboardPage() {
 					This week
 				</h3>
 				<div className="grid grid-cols-5 gap-2">
-					{days.map((day, i) => {
-						const entry = week[i];
-						const today = i === new Date().getDay() - 1;
+					{weekDates.map((dateObj) => {
+						const dateStr = dateObj.toISOString().split("T")[0]; 
+						const label = dateObj.toLocaleDateString("en-US", { weekday: "short" }); 
+						const entry = week.find((e) => e.date === dateStr); 
+						const isToday = dateStr === todayStr;
 						const status = entry ? getStatus(entry.checkInTime) : null;
 						const style = status
 							? STATUS_STYLE[status]
-							: {
-									bg: "var(--lighter-transparent-grey)",
-									color: "var(--brownish-dark-grey)",
-								};
+							: { bg: "var(--lighter-transparent-grey)", color: "var(--brownish-dark-grey)" };
+
 						return (
 							<div
-								key={day}
+								key={dateStr}
 								className="rounded-xl p-2 text-center"
 								style={{
 									background: style.bg,
-									outline: today ? `2px solid var(--grape-purple)` : "none",
+									outline: isToday ? `2px solid var(--grape-purple)` : "none",
 									outlineOffset: "2px",
 								}}
 							>
-								<div
-									className="text-xs font-semibold"
-									style={{ color: "var(--dark-blue-indigo)" }}
-								>
-									{day}
+								<div className="text-xs font-semibold" style={{ color: "var(--dark-blue-indigo)" }}>
+									{label}
 								</div>
 								<div className="text-xs mt-1" style={{ color: style.color }}>
 									{entry ? entry.checkInTime?.slice(0, 5) : "—"}
@@ -209,7 +211,7 @@ export default function DashboardPage() {
 											className="text-xs"
 											style={{ color: "var(--brownish-dark-grey)" }}
 										>
-											{new Date(item.date).toLocaleDateString("id-ID", {
+											{new Date(item.date).toLocaleDateString("en-US", {
 												weekday: "short",
 												day: "numeric",
 												month: "short",
